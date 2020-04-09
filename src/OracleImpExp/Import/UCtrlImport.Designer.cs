@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.rtxtOutput = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -39,6 +40,9 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbDmps = new System.Windows.Forms.ComboBox();
+            this.btnReadSchema = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnReload = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,6 +86,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnReload);
+            this.groupBox2.Controls.Add(this.btnReadSchema);
             this.groupBox2.Controls.Add(this.txtDestUser);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
@@ -98,15 +104,15 @@
             // 
             // txtDestUser
             // 
-            this.txtDestUser.Location = new System.Drawing.Point(322, 15);
+            this.txtDestUser.Location = new System.Drawing.Point(305, 15);
             this.txtDestUser.Name = "txtDestUser";
-            this.txtDestUser.Size = new System.Drawing.Size(132, 21);
+            this.txtDestUser.Size = new System.Drawing.Size(106, 21);
             this.txtDestUser.TabIndex = 12;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(275, 19);
+            this.label2.Location = new System.Drawing.Point(258, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 11;
@@ -115,7 +121,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(460, 19);
+            this.label1.Location = new System.Drawing.Point(467, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 10;
@@ -124,17 +130,18 @@
             // cmbUsers
             // 
             this.cmbUsers.FormattingEnabled = true;
-            this.cmbUsers.Location = new System.Drawing.Point(519, 15);
+            this.cmbUsers.Location = new System.Drawing.Point(526, 16);
             this.cmbUsers.Name = "cmbUsers";
-            this.cmbUsers.Size = new System.Drawing.Size(132, 20);
+            this.cmbUsers.Size = new System.Drawing.Size(107, 20);
             this.cmbUsers.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.cmbUsers, "选择或输入要导入到哪个用户\r\n支持输入不存在的用户，导入时将自动创建该用户");
             // 
             // btnImport
             // 
             this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImport.Location = new System.Drawing.Point(693, 14);
+            this.btnImport.Location = new System.Drawing.Point(709, 14);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(75, 23);
+            this.btnImport.Size = new System.Drawing.Size(59, 23);
             this.btnImport.TabIndex = 8;
             this.btnImport.Text = "导入";
             this.btnImport.UseVisualStyleBackColor = true;
@@ -155,9 +162,31 @@
             this.cmbDmps.FormattingEnabled = true;
             this.cmbDmps.Location = new System.Drawing.Point(47, 15);
             this.cmbDmps.Name = "cmbDmps";
-            this.cmbDmps.Size = new System.Drawing.Size(222, 20);
+            this.cmbDmps.Size = new System.Drawing.Size(205, 20);
             this.cmbDmps.TabIndex = 6;
             this.cmbDmps.SelectedIndexChanged += new System.EventHandler(this.cmbDmps_SelectedIndexChanged);
+            // 
+            // btnReadSchema
+            // 
+            this.btnReadSchema.Location = new System.Drawing.Point(410, 14);
+            this.btnReadSchema.Name = "btnReadSchema";
+            this.btnReadSchema.Size = new System.Drawing.Size(49, 23);
+            this.btnReadSchema.TabIndex = 13;
+            this.btnReadSchema.Text = "读取";
+            this.toolTip1.SetToolTip(this.btnReadSchema, "从DMP文件中读取原始用户名");
+            this.btnReadSchema.UseVisualStyleBackColor = true;
+            this.btnReadSchema.Click += new System.EventHandler(this.btnReadSchema_Click);
+            // 
+            // btnReload
+            // 
+            this.btnReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReload.Location = new System.Drawing.Point(644, 14);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(59, 23);
+            this.btnReload.TabIndex = 14;
+            this.btnReload.Text = "重载";
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // UCtrlImport
             // 
@@ -187,5 +216,8 @@
         private System.Windows.Forms.ComboBox cmbUsers;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtDestUser;
+        private System.Windows.Forms.Button btnReadSchema;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnReload;
     }
 }

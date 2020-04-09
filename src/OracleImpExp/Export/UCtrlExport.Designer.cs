@@ -112,9 +112,9 @@
             // btnExport
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExport.Location = new System.Drawing.Point(693, 14);
+            this.btnExport.Location = new System.Drawing.Point(709, 14);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.Size = new System.Drawing.Size(59, 23);
             this.btnExport.TabIndex = 8;
             this.btnExport.Text = "导出";
             this.btnExport.UseVisualStyleBackColor = true;

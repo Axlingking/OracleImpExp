@@ -38,6 +38,8 @@ namespace OracleImpExp.Export
 
         public void Reload()
         {
+            rtxtOutput.ResetText();
+
             cmbUsers.Items.Clear();
             Vars.Users.ForEach(a => cmbUsers.Items.Add(a));
             if (cmbUsers.Items.Count > 0) cmbUsers.SelectedIndex = 0;
@@ -50,6 +52,8 @@ namespace OracleImpExp.Export
 
         private void btnExport_Click(object sender, EventArgs e)
         {
+            rtxtOutput.ResetText();
+
             string schemas = cmbUsers.Text;
             if (string.IsNullOrWhiteSpace(schemas)) return;
 

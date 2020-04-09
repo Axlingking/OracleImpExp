@@ -40,6 +40,8 @@ namespace OracleImpExp.Utilities
                 {
                     // 本次读取字节数
                     int current_read_size = (stream.Length - totalCount >= bufferSize) ? bufferSize : (int)(stream.Length - totalCount);
+                    if (current_read_size <= 0) break;
+
                     // 起始索引
                     long begin_index = stream.Length - (totalCount + current_read_size);
 
@@ -58,8 +60,12 @@ namespace OracleImpExp.Utilities
             return result;
         }
 
-        private static readonly byte[] FALG_SCHEMA_LIST = new byte[] { 0x53, 0x43, 0x48, 0x45, 0x4D, 0x41, 0x5F, 0x4C, 0x49, 0x53, 0x54 };
-        private static readonly byte[] FALG_SCHEMA_LIST_OVERTURN = new byte[] { 0x54, 0x53, 0x49, 0x4C, 0x5F, 0x41, 0x4D, 0x45, 0x48, 0x43, 0x53 };
+        // ASCII: schemas=ISPM4 
+        //   HEX: 73 63 68 65 6D 61 73 3D 49 53 50 4D 34 20
+
+        // ASCII: schemas=
+        //   HEX: 73 63 68 65 6D 61 73 3D
+        private static readonly byte[] HEX_SCHEMAS = new byte[] { 0x73, 0x63, 0x68, 0x65, 0x6D, 0x61, 0x73, 0x3D };
 
         /// <summary>
         /// 尝试获取
@@ -75,66 +81,56 @@ namespace OracleImpExp.Utilities
 
             bool checking = false;
             int checkingStep = 0;
+            bool hit = false;
+            List<byte> datas = new List<byte>();
 
-            for (int i = buffer.Length - 1; i > 0; i--)
+            for (int i = 0; i < buffer.Length; i++)
             {
-                // 判断是否进入检查流程
-                if (buffer[i] == FALG_SCHEMA_LIST_OVERTURN[0] && !checking)
+                // 是否命中 schemas= 标识
+                if (!hit)
                 {
-                    checking = true;
-                    checkingStep = 0;
-                }
-
-                if (checking)
-                {
-                    if (buffer[i] == FALG_SCHEMA_LIST_OVERTURN[checkingStep])
+                    // 判断是否进入检查流程
+                    if (!checking && buffer[i] == HEX_SCHEMAS[0])
                     {
-                        checkingStep++;
+                        checking = true;
+                        checkingStep = 0;
+                    }
+
+                    if (checking)
+                    {
+                        if (buffer[i] == HEX_SCHEMAS[checkingStep])
+                        {
+                            checkingStep++;
+                        }
+                        else
+                            checking = false;
+
+                        if (checkingStep == HEX_SCHEMAS.Length)
+                        {
+                            hit = true;
+                        }
 
                         // 因该批次字节流不足导致的检查未能正常进行，记录应该回退的字节数
-                        if (i == buffer.Length) rollbackSize = FALG_SCHEMA_LIST_OVERTURN.Length - checkingStep;
+                        if (i == buffer.Length) rollbackSize = 256;
                     }
-                    else
-                        checking = false;
-
-                    if (checkingStep == FALG_SCHEMA_LIST_OVERTURN.Length)
+                }
+                else
+                {
+                    // 检测到空格位置
+                    if (buffer[i] == 0x20)
                     {
-                        schema = ResoveSchema(buffer, i);
-
+                        schema = Encoding.UTF8.GetString(datas.ToArray());
                         break;
                     }
+
+                    datas.Add(buffer[i]);
+
+                    // 因该批次字节流不足导致的检查未能正常进行，记录应该回退的字节数
+                    if (i == buffer.Length) rollbackSize = 256;
                 }
             }
 
             return !string.IsNullOrEmpty(schema);
-        }
-
-        /// <summary>
-        /// 解析
-        /// </summary>
-        /// <param name="buffer"></param>
-        /// <param name="startIndex"></param>
-        /// <returns></returns>
-        private static string ResoveSchema(byte[] buffer, int startIndex)
-        {
-            List<byte> datas = new List<byte>();
-
-            bool collect = false;
-            for (int i = startIndex; i < buffer.Length; i++)
-            {
-                if (buffer[i] == 0x27 && !collect)
-                {
-                    collect = true;
-                    continue;
-                }
-
-                if (buffer[i] == 0x27 && collect)
-                    break;
-
-                if (collect) datas.Add(buffer[i]);
-            }
-
-            return datas.Count > 0 ? Encoding.UTF8.GetString(datas.ToArray()) : string.Empty;
-        }
+        } 
     }
 }

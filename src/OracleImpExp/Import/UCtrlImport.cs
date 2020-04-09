@@ -39,6 +39,8 @@ namespace OracleImpExp.Import
 
         public void Reload()
         {
+            rtxtOutput.ResetText();
+
             cmbDmps.Items.Clear();
             GetDmpFiles(Vars.DATA_PUMP_DIR).ForEach(a => cmbDmps.Items.Add(a));
             if (cmbDmps.Items.Count > 0) cmbDmps.SelectedIndex = 0;
@@ -46,6 +48,8 @@ namespace OracleImpExp.Import
             cmbUsers.Items.Clear();
             Vars.Users.ForEach(a => cmbUsers.Items.Add(a));
             if (cmbUsers.Items.Count > 0) cmbUsers.SelectedIndex = 0;
+
+            txtDestUser.Text = string.Empty;
         }
 
         /// <summary>
@@ -63,14 +67,47 @@ namespace OracleImpExp.Import
             DmpFile dmpFile = cmbDmps.SelectedItem as DmpFile;
             if (dmpFile == null) return;
 
-            if (string.IsNullOrEmpty(dmpFile.Schema))
-                dmpFile.Schema = DmpSchemaReader.Read(dmpFile.FilePath);
+            //if (string.IsNullOrEmpty(dmpFile.Schema))
+            //    dmpFile.Schema = DmpSchemaReader.Read(dmpFile.FilePath);
 
             txtDestUser.Text = dmpFile.Schema;
         }
 
+        /// <summary>
+        /// 从DMP文件中读取原用户名
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReadSchema_Click(object sender, EventArgs e)
+        {
+            DmpFile dmpFile = cmbDmps.SelectedItem as DmpFile;
+            if (dmpFile == null) return;
+
+            if (!string.IsNullOrEmpty(dmpFile.Schema))
+                return;
+
+            dmpFile.Schema = DmpSchemaReader.Read(dmpFile.FilePath).ToUpper();
+
+            if (!string.IsNullOrEmpty(dmpFile.Schema))
+                txtDestUser.Text = dmpFile.Schema;
+            else
+                MessageBox.Show("读取失败，仅支持数据泵模式备份文件");
+        }
+
+        /// <summary>
+        /// 重新加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            Reload();
+        }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
+            rtxtOutput.ResetText();
+
             string destSchema = txtDestUser.Text.Trim();
             if (string.IsNullOrWhiteSpace(destSchema)) return;
 
@@ -148,6 +185,8 @@ namespace OracleImpExp.Import
                 cmbDmps.Enabled = enabled;
                 txtDestUser.Enabled = enabled;
                 cmbUsers.Enabled = enabled;
+                btnReadSchema.Enabled = enabled;
+                btnReload.Enabled = enabled;
                 btnImport.Enabled = enabled;
             });
         }
