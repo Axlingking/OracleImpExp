@@ -42,6 +42,11 @@ namespace OracleImpExp
         }
 
         /// <summary>
+        /// 主机名
+        /// </summary>
+        public string Host { get; set; } = "localhost";
+
+        /// <summary>
         /// 用户名
         /// </summary>
         public string UserId { get; set; } = "system";

@@ -20,7 +20,7 @@ namespace OracleImpExp
 
         private void FrmConnection_Load(object sender, EventArgs e)
         {
-            txtHost.Text = SystemInformation.ComputerName;
+            txtHost.Text = Configuration.Instance.Host;
             txtUserId.Text = Configuration.Instance.UserId;
             txtPassword.Text = Configuration.Instance.Password;
         }
