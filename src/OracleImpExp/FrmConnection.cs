@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Dapper;
+using OracleImpExp.Utilities;
 
 namespace OracleImpExp
 {
@@ -20,28 +21,34 @@ namespace OracleImpExp
 
         private void FrmConnection_Load(object sender, EventArgs e)
         {
-            txtHost.Text = Configuration.Instance.Host;
+            txtServer.Text = Configuration.Instance.Host;
             txtUserId.Text = Configuration.Instance.UserId;
             txtPassword.Text = Configuration.Instance.Password;
         }
 
         private void btnConnection_Click(object sender, EventArgs e)
         {
-            string host = txtHost.Text.Trim();
+            string server = txtServer.Text.Trim();
 
             string userId = txtUserId.Text.Trim();
             string password = txtPassword.Text;
 
-            if (string.IsNullOrWhiteSpace(host) || string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(server) || string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(password))
                 return;
+
+            if (userId.Equals("sys", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show($"不支持 sys 登录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             try
             {
-                using (OracleConnection connection = new OracleConnection($"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={host})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL)));User Id={userId};Password={password};"))
+                using (OracleConnection connection = new OracleConnection($"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME={server})));User Id={userId};Password={password};"))
                 {
                     connection.Open();
 
-                    Vars.Host = host;
+                    Vars.Server = server;
                     Vars.UserId = userId;
                     Vars.Password = password;
 

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtHost = new System.Windows.Forms.TextBox();
+            this.txtServer = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,7 +43,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.txtHost);
+            this.panel1.Controls.Add(this.txtServer);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.txtPassword);
             this.panel1.Controls.Add(this.label2);
@@ -54,12 +54,13 @@
             this.panel1.Size = new System.Drawing.Size(246, 114);
             this.panel1.TabIndex = 0;
             // 
-            // txtHost
+            // txtServer
             // 
-            this.txtHost.Location = new System.Drawing.Point(67, 19);
-            this.txtHost.Name = "txtHost";
-            this.txtHost.Size = new System.Drawing.Size(140, 21);
-            this.txtHost.TabIndex = 9;
+            this.txtServer.Location = new System.Drawing.Point(67, 19);
+            this.txtServer.Name = "txtServer";
+            this.txtServer.Size = new System.Drawing.Size(140, 21);
+            this.txtServer.TabIndex = 9;
+            this.txtServer.Text = "orcl";
             // 
             // label3
             // 
@@ -68,7 +69,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 8;
-            this.label3.Text = "主机名";
+            this.label3.Text = "服务名";
             // 
             // txtPassword
             // 
@@ -131,7 +132,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(270, 171);
+            this.ClientSize = new System.Drawing.Size(270, 170);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConnection);
             this.Controls.Add(this.panel1);
@@ -160,7 +161,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnConnection;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.TextBox txtHost;
+        private System.Windows.Forms.TextBox txtServer;
         private System.Windows.Forms.Label label3;
     }
 }

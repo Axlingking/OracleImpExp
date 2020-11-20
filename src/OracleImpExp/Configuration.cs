@@ -42,9 +42,9 @@ namespace OracleImpExp
         }
 
         /// <summary>
-        /// 主机名
+        /// 服务名
         /// </summary>
-        public string Host { get; set; } = "localhost";
+        public string Host { get; set; } = "orcl";
 
         /// <summary>
         /// 用户名
@@ -54,6 +54,6 @@ namespace OracleImpExp
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
     }
 }
