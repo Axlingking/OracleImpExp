@@ -30,7 +30,7 @@ namespace OracleImpExp
         /// <summary>
         /// 连接字符串
         /// </summary>
-        public static string ConnectionString { get { return $"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={Server})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL)));User Id={UserId};Password={Password};"; } }
+        public static string ConnectionString { get { return $"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME={Server})));User Id={UserId};Password={Password};"; } }
         
         /// <summary>
         /// DATA_PUMP_DIR 指定的目录

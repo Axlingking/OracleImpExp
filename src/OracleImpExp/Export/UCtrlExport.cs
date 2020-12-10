@@ -60,7 +60,7 @@ namespace OracleImpExp.Export
             string fileName = txtFileName.Text.Trim();
             if (string.IsNullOrWhiteSpace(fileName)) return;
 
-            string command = $"EXPDP USERID={Vars.UserId}/\"\"\"{Vars.Password}\"\"\"@orcl schemas={schemas} directory=DATA_PUMP_DIR dumpfile={fileName}.dmp logfile={fileName}.log";
+            string command = $"EXPDP USERID={Vars.UserId}/\"\"\"{Vars.Password}\"\"\"@{Vars.Server} schemas={schemas} directory=DATA_PUMP_DIR dumpfile={fileName}.dmp logfile={fileName}.log";
 
             this.IsWorking = true;
 

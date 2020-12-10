@@ -21,7 +21,7 @@ namespace OracleImpExp
 
         private void FrmConnection_Load(object sender, EventArgs e)
         {
-            txtServer.Text = Configuration.Instance.Host;
+            txtServer.Text = Configuration.Instance.Server;
             txtUserId.Text = Configuration.Instance.UserId;
             txtPassword.Text = Configuration.Instance.Password;
         }
@@ -52,6 +52,7 @@ namespace OracleImpExp
                     Vars.UserId = userId;
                     Vars.Password = password;
 
+                    Configuration.Instance.Server = server;
                     Configuration.Instance.UserId = userId;
                     Configuration.Instance.Password = password;
                     Configuration.Instance.Save();

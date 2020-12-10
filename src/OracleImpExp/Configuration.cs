@@ -44,7 +44,7 @@ namespace OracleImpExp
         /// <summary>
         /// 服务名
         /// </summary>
-        public string Host { get; set; } = "orcl";
+        public string Server { get; set; } = "orcl";
 
         /// <summary>
         /// 用户名

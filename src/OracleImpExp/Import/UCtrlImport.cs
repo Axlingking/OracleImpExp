@@ -123,9 +123,9 @@ namespace OracleImpExp.Import
             string command = string.Empty;
 
             if (destSchema.Equals(targetSchema, StringComparison.CurrentCultureIgnoreCase))
-                command = $"IMPDP USERID={Vars.UserId}/\"\"\"{Vars.Password}\"\"\"@orcl directory=DATA_PUMP_DIR dumpfile={dumpfile}.dmp logfile={dumpfile}.log";
+                command = $"IMPDP USERID={Vars.UserId}/\"\"\"{Vars.Password}\"\"\"@{Vars.Server} directory=DATA_PUMP_DIR dumpfile={dumpfile}.dmp logfile={dumpfile}.log";
             else
-                command = $"IMPDP USERID={Vars.UserId}/\"\"\"{Vars.Password}\"\"\"@orcl directory=DATA_PUMP_DIR dumpfile={dumpfile}.dmp logfile={dumpfile}.log remap_schema={destSchema}:{targetSchema}";
+                command = $"IMPDP USERID={Vars.UserId}/\"\"\"{Vars.Password}\"\"\"@{Vars.Server} directory=DATA_PUMP_DIR dumpfile={dumpfile}.dmp logfile={dumpfile}.log remap_schema={destSchema}:{targetSchema}";
 
             this.IsWorking = true;
 
